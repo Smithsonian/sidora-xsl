@@ -1,0 +1,1286 @@
+
+<!--
+Copyright 2015-2017 Smithsonian Institution.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License.You may obtain a copy of
+the License at: http://www.apache.org/licenses/
+
+This software and accompanying documentation is supplied without
+warranty of any kind. The copyright holder and the Smithsonian Institution:
+(1) expressly disclaim any warranties, express or implied, including but not
+limited to any implied warranties of merchantability, fitness for a
+particular purpose, title or non-infringement; (2) do not assume any legal
+liability or responsibility for the accuracy, completeness, or usefulness of
+the software; (3) do not represent that use of the software would not
+infringe privately owned rights; (4) do not warrant that the software
+is error-free or will be maintained, supported, updated or enhanced;
+(5) will not be liable for any indirect, incidental, consequential special
+or punitive damages of any kind or nature, including but not limited to lost
+profits or loss of data, on any basis arising from contract, tort or
+otherwise, even if any of the parties has been warned of the possibility of
+such loss or damage.
+
+This distribution includes several third-party libraries, each with their own
+license terms. For a complete copy of all copyright and license terms, including
+those of third-party libraries, please see the product release notes.
+-->
+<!-- 
+  
+  This schema is intended to be used as a general "metadata toolkit" to 
+create different configurations of descriptive metadata for concept objects in SIdora.
+It is intended to make the XML forms easy to build, while capturing complex semantics
+in ways that can be tailored by the user as much as possible. 
+
+The intent is to provide disseminations for the metadata for each kind of concept in one 
+or more appropriate standards after the fact
+
+Created by Thorny Staples, 11/21/14. 
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:attributeGroup name="globalattrs">
+		<xs:attribute name="id" type="xs:string"/>
+		<xs:attribute name="lang"/>
+		<xs:attribute name="label"/>
+		<xs:attribute name="scheme"/>
+		<xs:attribute name="class"/>
+		<xs:attribute name="type"/>
+		<xs:attribute name="schemeID"/>
+	</xs:attributeGroup>
+	<xs:element name="inline" abstract="true"/>
+	<!-- ************************************************************** -->
+	<!-- Character Entities -->
+	<!--
+    ************************************************************** 
+    Do we need these?
+  -->
+	<!-- ************************************************************** -->
+	<!-- Elements -->
+	<!-- ************************************************************** -->
+	<xs:element name="SIdoraConcept">
+		<xs:annotation>
+			<xs:documentation>This is the base node that wraps the description.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="conceptType" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="primaryTitle" minOccurs="1" maxOccurs="1"/>
+				<xs:element ref="altTitle" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="summaryDescription" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:element ref="inline" maxOccurs="unbounded" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="attlist.note"/>
+						<xs:attributeGroup ref="globalattrs"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="keyword" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="entityType" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="identifier" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="rights" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="source" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="relationship" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="timePeriod" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="place" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="actor" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="language" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="physDesc" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="condition" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="context" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="style" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="format" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="materials" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="technique" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="treatment" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="measurements" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="contactInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="address1"/>
+				<xs:element minOccurs="0" name="address2"/>
+				<xs:element minOccurs="0" name="city"/>
+				<xs:element minOccurs="0" name="state"/>
+				<xs:element minOccurs="0" name="postalCode"/>
+				<xs:element minOccurs="0" name="country"/>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="phone">
+					<xs:complexType mixed="true">
+						<xs:attributeGroup ref="globalattrs"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element maxOccurs="unbounded" minOccurs="0" name="email">
+					<xs:complexType mixed="true">
+						<xs:attributeGroup ref="globalattrs"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="globalattrs"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="conceptType">
+		<xs:annotation>
+			<xs:documentation>This is the SIdora concept type which determines how the rest of the elements are interpreted </xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.conceptType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.conceptType">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="primaryTitle">
+		<xs:annotation>
+			<xs:documentation>The required name, label or formal title of the entity being described in the record that can always be used for navigation and primary labeling. for example, 
+        this is the title that gets used in the SIdora concept navigation</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="titleText"/>
+				<xs:element ref="persname"/>
+				<xs:element ref="corpname"/>
+				<xs:element ref="taxonName"/>
+			</xs:choice>
+			<xs:attributeGroup ref="attlist.primaryTitle"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.primaryTitle">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="altTitle">
+		<xs:annotation>
+			<xs:documentation>Alternate name, label or formal titles of the entity being described in the record.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="titleText"/>
+					<xs:element ref="persname"/>
+					<xs:element ref="corpname"/>
+					<xs:element ref="taxonName"/>
+				</xs:choice>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.altTitle"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.altTitle">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="note">
+		<xs:annotation>
+			<xs:documentation>A short text that describes such things that amplify the meaning of the entity being described, such as project descriptions, excavation notes, 
+        ornament notes, abstracts, etc., when used at the top level. When 
+        used within a complex element it is condsidered to be a note about that element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="inline" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.note"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.note">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="keyword">
+		<xs:annotation>
+			<xs:documentation>Contains terms keywords, subject terms, key phrases or classification codes, usually
+        drawn from a thesaurus, that describe a topic of the parent element.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.keyword"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.keyword">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="place">
+		<xs:annotation>
+			<xs:documentation>Spatial location information about the entity being described, such as creation place, current place where it is located, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="geogname" maxOccurs="unbounded" minOccurs="0"/>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="boundedby"/>
+					<xs:element ref="point"/>
+					<xs:element ref="geometry" minOccurs="0"/>
+				</xs:choice>
+				<xs:element ref="timePeriod" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.place"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.place">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    The projection attribute contains the name of the projection along
+    with any parameters required, such as ellipsoid parameters, datum, standard
+    parallels and meridians, zone, etc.
+  -->
+	<!--  -->
+	<!--  -->
+	<xs:element name="timePeriod">
+		<xs:annotation>
+			<xs:documentation>The time assciated with the entity being described, such as creation time.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="intervalname" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="date" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.timePeriod"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.timePeriod">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<!--
+    
+  -->
+	<xs:element name="physDesc">
+		<xs:annotation>
+			<xs:documentation>Used to describe physical characteristics or features of the entity being describe. For example, the sex of an animal, 
+        the topography of a place, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.physDesc"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.physDesc">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="format">
+		<xs:annotation>
+			<xs:documentation>Physical or digital manifestation.  Format may include media-type.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.format"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.format">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="identifier">
+		<xs:annotation>
+			<xs:documentation>A standard identifier for the parent element, e.g. ISSN, opus no.,
+        etc., or a URI.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.identifier"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.identifier">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- . -->
+	<xs:annotation>
+		<xs:documentation>A language of the intellectual content of the parent element</xs:documentation>
+	</xs:annotation>
+	<xs:element name="language">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.language"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.language">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="rights">
+		<xs:annotation>
+			<xs:documentation>A statement of the ownership and/or access rights associated with the
+        parent element or a reference to such a statement.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.rights"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.rights">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="source">
+		<xs:annotation>
+			<xs:documentation>A reference to another entity from which the present entity is/was derived.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.source"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.source">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- -->
+	<xs:element name="context">
+		<xs:annotation>
+			<xs:documentation>A description of such things as the entity's historical or cultural context.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.context"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.context">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- -->
+	<xs:element name="actor">
+		<xs:annotation>
+			<xs:documentation>Use instead of DC creator, contributor, and publisher elements. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="corpname"/>
+					<xs:element ref="persnameText"/>
+					<xs:element ref="persname"/>
+					<xs:element ref="taxonName"/>
+				</xs:choice>
+				<xs:element ref="contactInfo" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.actor"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.actor">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="role"/>
+	</xs:attributeGroup>
+	<!--
+    The role attribute is provided in order to define an agent's
+    participation in the creation and/or distribution of an entity while the
+    analog attribute is provided for mapping to another encoding, such as Dublin
+    Core.  While these attributes may potentially have the same values, it is
+    important not to confuse their respective purposes.  The type attribute should
+    not be used to express an agent's role.  Potential values for the scheme
+    attribute include: LCNAF (Library of Congress Name Authority File)
+  -->
+	<!--
+    
+  -->
+	<xs:element name="entityType">
+		<xs:annotation>
+			<xs:documentation>This element is used to further classify the entity that is the subject of the record. conceptType formally classifies 
+        it as a specific SIdora concept. This is for other kinds of classification to further extend that by the user.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.entityType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.entityType">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="measurements">
+		<xs:annotation>
+			<xs:documentation>Measurements is a wrapper for one or more measurement tags, that allows for general comments how the measurements were taken and how
+        accurate they are.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="measurementText" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="measurement" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="timePeriod" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="accuracy" minOccurs="0"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.measurements"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.measurements">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--   -->
+	<xs:element name="measurementText">
+		<xs:annotation>
+			<xs:documentation>This is for cases where the measurements are just a string of text.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.measurementText"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.measurementText">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="measurement">
+		<xs:annotation>
+			<xs:documentation>The measurement tag is intended to be a single dimension usually using a combination of the type, value and units attributes.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attributeGroup ref="attlist.measurement"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.measurement">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="value"/>
+		<xs:attribute name="units"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="materials">
+		<xs:annotation>
+			<xs:documentation>For physical entities, what it is made of.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.materials"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.materials">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="technique">
+		<xs:annotation>
+			<xs:documentation>Describes the method of making an entity.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.technique"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.technique">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="condition">
+		<xs:annotation>
+			<xs:documentation>Currently obeserved state of the entity described.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.condition"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.condition">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="treatment">
+		<xs:annotation>
+			<xs:documentation>enhancement, adjustment or preparation of the entity described </xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.treatment"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.treatment">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="style">
+		<xs:annotation>
+			<xs:documentation>Stylistic name or period, e.g. Baroque, Bebop, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.style"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.style">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- -->
+	<xs:element name="relationship">
+		<xs:annotation>
+			<xs:documentation>This is used to describe an significant relationship from the entity being described to another one </xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="value"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.relationship"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.relationship">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- ************************************************************** -->
+	<!-- Date and time elements -->
+	<!-- ************************************************************** -->
+	<!--  -->
+	<xs:element name="date">
+		<xs:annotation>
+			<xs:documentation>A date associated with the parent element.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:choice maxOccurs="unbounded" minOccurs="0">
+				<xs:element ref="year"/>
+				<xs:element ref="month"/>
+				<xs:element ref="day"/>
+				<xs:element ref="time"/>
+			</xs:choice>
+			<xs:attributeGroup ref="attlist.date"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.date">
+		<xs:attribute name="analog" type="xs:NMTOKENS" default="date"/>
+		<xs:attribute name="certainty"/>
+		<xs:attribute name="era" default="ad">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="ad"/>
+					<xs:enumeration value="bc"/>
+					<xs:enumeration value="cc"/>
+					<xs:enumeration value="cd"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="normal"/>
+		<xs:attribute name="othertype"/>
+		<xs:attribute name="scheme"/>
+		<xs:attribute name="type"/>
+	</xs:attributeGroup>
+	<!--
+    Era attribute based on FGDC handling of dates:
+    ad = A.D. era to Dec. 31, 9999 A.D. (general form YYYYMMDD)
+    bc = B.C. era to 9999 B.C. (general form bcYYYYMMDD)
+    cc = B.C. era before 9999 (general form ccYYYYYYY..)
+    cd = A.D. era after 9999 A.D. (general form cdYYYYYYY...)
+  -->
+	<!--
+    Year, month, day, and time are provided to break a date into its
+    component parts for easier machine processing.
+  -->
+	<xs:element name="year">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.year"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.year">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="month">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.month"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.month">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="day">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.day"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.day">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="time">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.time"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.time">
+		<xs:attribute name="type" default="local">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="local"/>
+					<xs:enumeration value="localoffset"/>
+					<xs:enumeration value="GMT"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="intervalname">
+		<xs:annotation>
+			<xs:documentation>A time period name, e.g. "the last voyage of Sinbad", "last week".</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.intervalname"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.intervalname">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- ************************************************************** -->
+	<!-- Geometry elements -->
+	<!-- Derived from GML and DCMI bounding box proposals -->
+	<!-- ************************************************************** -->
+	<!--
+
+  -->
+	<xs:element name="boundedby">
+		<xs:annotation>
+			<xs:documentation>The bounding box (boundedby) of a feature is defined by 4 
+        boundaries, with 2 optional elevation boundaries or by 4 points
+        with optional elevation boundaries.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element ref="northlat"/>
+					<xs:element ref="westlong"/>
+					<xs:element ref="southlat"/>
+					<xs:element ref="eastlong"/>
+					<xs:element ref="uplimit" minOccurs="0"/>
+					<xs:element ref="downlimit" minOccurs="0"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element ref="point"/>
+					<xs:element ref="point"/>
+					<xs:element ref="point"/>
+					<xs:element ref="point"/>
+					<xs:element ref="uplimit" minOccurs="0"/>
+					<xs:element ref="downlimit" minOccurs="0"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:attributeGroup ref="attlist.boundedby"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.boundedby">
+		<xs:attribute name="id" type="xs:ID"/>
+		<xs:attribute name="label"/>
+		<xs:attribute name="projection" default="geographic"/>
+		<xs:attribute name="type"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="geogname">
+		<xs:annotation>
+			<xs:documentation>Name of a geographic feature.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.geogname"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.geogname">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="accuracy">
+		<xs:annotation>
+			<xs:documentation>Explanatory text on the accuracy of the location or set measurements</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence maxOccurs="unbounded" minOccurs="0">
+				<xs:element ref="inline" maxOccurs="unbounded" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.accuracy"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.accuracy">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- -->
+	<xs:element name="method">
+		<xs:annotation>
+			<xs:documentation>Explanatory text on the method used to collect the location data or set of measuremenents </xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="corpname" minOccurs="0"/>
+				<xs:element ref="date" minOccurs="0"/>
+				<xs:element ref="p" minOccurs="0"/>
+				<xs:element ref="note" minOccurs="0" maxOccurs="1"/>
+				<xs:element ref="persname" minOccurs="0"/>
+			</xs:choice>
+			<xs:attributeGroup ref="attlist.method"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.method">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- Feature geometry -->
+	<xs:element name="geometryclasses" abstract="true"/>
+	<!--
+    
+  -->
+	<xs:element name="geometry">
+		<xs:annotation>
+			<xs:documentation>The geometry element includes pointers to allow for data stored elsewhere,
+        e.g. in a separate database or GIS such as ArcInfo.  Each geometry member may
+        have 0 or more attributes, each consisting of an attname and attvalue pair.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="geometryclasses" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.geometry"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.geometry">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="projection" default="geographic"/>
+	</xs:attributeGroup>
+	<xs:element name="attribute">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="attname"/>
+				<xs:element ref="attvalue"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.attribute"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.attribute">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="attname">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.attname"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.attname">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="attvalue">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.attvalue"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.attvalue">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="point" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation>A point is defined by two values, with an optional third coordinate for
+        elevation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="lat"/>
+				<xs:element ref="long"/>
+				<xs:element ref="uplimit" minOccurs="0"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.point"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.point">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="lat">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.lat"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.lat">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="signed decimal degrees"/>
+	</xs:attributeGroup>
+	<xs:element name="long">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.long"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.long">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="signed decimal degrees"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="line" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation>A line is defined by two or more points with linear interpolation
+        between them.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="point"/>
+				<xs:element ref="point" maxOccurs="unbounded"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.line"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.line">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="polygon" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation>A polygon is defined by an outerboundary and zero or more inner
+        boundaries.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="outbound"/>
+				<xs:element ref="inbound" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.polygon"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.polygon">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="outbound">
+		<xs:annotation>
+			<xs:documentation>Outer and inner polygon boundaries are defined by at least 3 points with
+        linear interpolation between them.  Boundaries are presumed to be closed; the
+        first and last points need not be coincident.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element ref="point"/>
+						<xs:element ref="point"/>
+						<xs:element ref="point" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:element ref="circle"/>
+				</xs:choice>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.outbound"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.outbound">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="inbound">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element ref="point"/>
+						<xs:element ref="point"/>
+						<xs:element ref="point" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:element ref="circle"/>
+				</xs:choice>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.inbound"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.inbound">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--
+    
+  -->
+	<xs:element name="circle">
+		<xs:annotation>
+			<xs:documentation>A circle is a special inner or outer boundary defined by a center point
+        and a radius. This representation is more compact, but probably has to be
+        converted to a point-by-point representation in order to perform GIS-like
+        calculations.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="point"/>
+				<xs:element ref="radius"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.circle"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.circle">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="radius">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.radius"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.radius">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" use="required"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="multipoint" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation>A multipoint consists one or more points.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="point" maxOccurs="unbounded"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.multipoint"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.multipoint">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- A multiline consists of one or more lines. -->
+	<xs:element name="multiline" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="line" maxOccurs="unbounded"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.multiline"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.multiline">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="multipolygon" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation>A multipolygon consists of one or more polygons.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="polygon" maxOccurs="unbounded"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.multipolygon"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.multipolygon">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="geometrycoll" substitutionGroup="geometryclasses">
+		<xs:annotation>
+			<xs:documentation>A geometrycollection consists of one or more geometry classes.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="geometryclasses" maxOccurs="unbounded"/>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.geometrycoll"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.geometrycoll">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--   -->
+	<xs:element name="northlat">
+		<xs:annotation>
+			<xs:documentation>Coordinates are defined by their function.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.northlat"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.northlat">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="signed decimal degrees"/>
+	</xs:attributeGroup>
+	<xs:element name="eastlong">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.eastlong"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.eastlong">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="signed decimal degrees"/>
+	</xs:attributeGroup>
+	<xs:element name="southlat">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.southlat"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.southlat">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="signed decimal degrees"/>
+	</xs:attributeGroup>
+	<xs:element name="westlong">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.westlong"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.westlong">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="signed decimal degrees"/>
+	</xs:attributeGroup>
+	<xs:element name="uplimit">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.uplimit"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.uplimit">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="meters"/>
+	</xs:attributeGroup>
+	<xs:element name="downlimit">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.downlimit"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.downlimit">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units" default="meters"/>
+	</xs:attributeGroup>
+	<!-- ************************************************************** -->
+	<!-- Additional elements -->
+	<!-- ************************************************************** -->
+	<!--  -->
+	<xs:element name="titleText">
+		<xs:annotation>
+			<xs:documentation>Text only title content.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.titleText"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.titleText">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="persnameText">
+		<xs:annotation>
+			<xs:documentation>Personal name that is a string, not broken down into standard parts.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.persnameText"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.persnameText">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="corpname">
+		<xs:annotation>
+			<xs:documentation>Name of a corporate body, e.g. U.S. Dept. of Commerce.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.corpname"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.corpname">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="normal"/>
+		<xs:attribute name="role"/>
+	</xs:attributeGroup>
+	<!--  -->
+	<xs:element name="num">
+		<xs:annotation>
+			<xs:documentation>Any number; used primarily, however, as an identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:element ref="inline" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.num"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.num">
+		<xs:attributeGroup ref="globalattrs"/>
+		<xs:attribute name="units"/>
+	</xs:attributeGroup>
+	<!--
+    potential values for the type attribute include: ISBN, ISSN, catalog,
+    stock, etc.
+  -->
+	<!--  -->
+	<xs:element name="persname">
+		<xs:annotation>
+			<xs:documentation>Human name elements</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="firstname"/>
+				<xs:element ref="middlename" minOccurs="0"/>
+				<xs:element ref="lastname"/>
+				<xs:element ref="suffix" minOccurs="0"/>
+				<xs:element minOccurs="0" ref="contactInfo" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.persname"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.persname">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="firstname" type="xs:string"/>
+	<xs:element name="middlename" type="xs:string"/>
+	<xs:element name="lastname" type="xs:string"/>
+	<xs:element name="suffix" type="xs:string"/>
+	<!-- Scientific name elements -->
+	<xs:element name="taxonName">
+		<xs:annotation>
+			<xs:documentation>Scientific name elements</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="genus"/>
+				<xs:element ref="species"/>
+				<xs:element minOccurs="0" name="scientificNameAuthorship"/>
+				<xs:element ref="commonName" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="kingdom" minOccurs="0"/>
+				<xs:element ref="phylum" minOccurs="0"/>
+				<xs:element ref="class" minOccurs="0"/>
+				<xs:element ref="order" minOccurs="0"/>
+				<xs:element ref="family" minOccurs="0"/>
+				<xs:element ref="variant" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="attlist.taxonName"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.taxonName">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="phylum">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.phylum"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.phylum">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="class">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.class"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.class">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="order">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.order"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.order">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="family">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.family"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.family">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="genus">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.genus"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.genus">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="species">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.species"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.species">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="variant">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.variant"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.variant">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<xs:element name="commonName">
+		<xs:complexType mixed="true">
+			<xs:attributeGroup ref="attlist.commonName"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:attributeGroup name="attlist.commonName">
+		<xs:attributeGroup ref="globalattrs"/>
+	</xs:attributeGroup>
+	<!-- The value element is used in a top-level element to contain the word or phrase that is the primary content of the element. -->
+	<!--  This is used to pair that content with an optional note, or other possible elements that add to the meaning of that instance of -->
+	<!--  the top-level element. -->
+	<xs:element name="value" type="xs:string"/>
+	<!-- ************************************************************** -->
+	<!-- Low-level, e.g. inline, elements -->
+	<!-- ************************************************************** -->
+	<!-- Paragraph -->
+	<xs:element name="p" type="xs:string" substitutionGroup="inline"/>
+	<xs:element name="bold" type="xs:string" substitutionGroup="inline"/>
+	<xs:element name="underline" type="xs:string" substitutionGroup="inline"/>
+	<xs:element name="ital" type="xs:string" substitutionGroup="inline"/>
+	<!-- Line break -->
+	<xs:element name="lb" substitutionGroup="inline">
+		<xs:complexType/>
+	</xs:element>
+</xs:schema>

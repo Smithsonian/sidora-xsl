@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3">
+  <properties>
+    <root_name>SimpleDarwinRecordSet</root_name>
+    <schema_uri/>
+    <namespaces default="http://rs.tdwg.org/dwc/xsd/simpledarwincore/">
+      <namespace prefix="dwr">http://rs.tdwg.org/dwc/xsd/simpledarwincore/</namespace>
+      <namespace prefix="xsi">http://www.w3.org/2001/XMLSchema-instance</namespace>
+      <namespace prefix="dwc">http://rs.tdwg.org/dwc/terms/</namespace>
+      <namespace prefix="dc">http://purl.org/dc/terms/</namespace>
+    </namespaces>
+  </properties>
+  <form>
+    <properties>
+      <type>form</type>
+      <access>TRUE</access>
+      <required>FALSE</required>
+      <tree>TRUE</tree>
+    </properties>
+    <children>
+      <element name="SimpleDarwinRecord">
+        <properties>
+          <type>markup</type>
+          <access>TRUE</access>
+          <required>FALSE</required>
+          <tree>TRUE</tree>
+          <actions>
+            <create>
+              <path>/dwr:SimpleDarwinRecordSet</path>
+              <context>document</context>
+              <schema/>
+              <type>element</type>
+              <prefix>NULL</prefix>
+              <value>SimpleDarwinRecord</value>
+            </create>
+            <read>
+              <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+              <context>document</context>
+            </read>
+            <update>NULL</update>
+            <delete>NULL</delete>
+          </actions>
+        </properties>
+        <children>
+          <element name="record_level_terms">
+            <properties>
+              <type>fieldset</type>
+              <access>TRUE</access>
+              <required>FALSE</required>
+              <title>Record-level terms</title>
+              <tree>TRUE</tree>
+            </properties>
+            <children>
+              <element name="basisOfRecord">
+                <properties>
+                  <type>select</type>
+                  <access>TRUE</access>
+                  <default_value>PreservedSpecimen</default_value>
+                  <description>A descriptive term indicating whether the record represents an object or observation. Term definitions are available here: http://wiki.tdwg.org/twiki/bin/view/DarwinCore/BasisOfRecord</description>
+                  <options>
+                    <index key="Still Image">Still Image</index>
+                    <SoundRecording>SoundRecording</SoundRecording>
+                    <PreservedSpecimen>PreservedSpecimen</PreservedSpecimen>
+                    <OtherSpecimen>OtherSpecimen</OtherSpecimen>
+                    <MovingImage>MovingImage</MovingImage>
+                    <MachineObservation>MachineObservation</MachineObservation>
+                    <LivingSpecimen>LivingSpecimen</LivingSpecimen>
+                    <HumanObservation>HumanObservation</HumanObservation>
+                    <FossilSpecimen>FossilSpecimen</FossilSpecimen>
+                  </options>
+                  <required>FALSE</required>
+                  <title>Basis of Record</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:basisOfRecord</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:basisOfRecord</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+              <element name="associatedMedia">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <description>A list (concatenated and separated) of identifiers (publication, global unique identifier, URI) of media associated with the Occurrence. see also http://rs.tdwg.org/dwc/terms/index.htm#associatedMedia
+Examples: "http://arctos.database.museum/SpecimenImages/UAMObs/Mamm/2/P7291179.JPG"</description>
+                  <required>FALSE</required>
+                  <title>Associated Media</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:associatedMedia</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:associatedMedia</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+              <element name="lifestage">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <description>The age class or life stage of the biological individual(s) at the time the Occurrence was recorded. Recommended best practice is to use a controlled vocabulary. see also http://rs.tdwg.org/dwc/terms/index.htm#lifeStage
+Examples: "egg", "eft", "juvenile", "adult", "2 adults 4 juveniles"</description>
+                  <required>FALSE</required>
+                  <title>Lifestage</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:lifeStage</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:lifeStage</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+              <element name="sex">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <description>The sex of the biological individual(s) represented in the Occurrence. Recommended best practice is to use a controlled vocabulary. see also http://rs.tdwg.org/dwc/terms/index.htm#sex
+Examples: "female", "hermaphrodite", "8 males, 4 females"</description>
+                  <required>FALSE</required>
+                  <title>Sex</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:sex</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:sex</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+              <element name="identificationRemarks">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <description>Comments or notes about the Identification. see also http://rs.tdwg.org/dwc/terms/index.htm#identificationRemarks
+Examples: "Distinguished between Anthus correndera and Anthus hellmayri based on the comparative lengths of the u&#xF1;as."</description>
+                  <required>FALSE</required>
+                  <title>Identification Remarks</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:identificationRemarks</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:identificationRemarks</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+              <element name="identifiedBy">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <description>A list (concatenated and separated) of names of people, groups, or organizations who assigned the Taxon to the subject. see also http://rs.tdwg.org/dwc/terms/index.htm#identifiedBy
+Examples: "James L. Patton", "Theodore Pappenfuss; Robert Macey"</description>
+                  <required>FALSE</required>
+                  <title>Identified By</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:identifiedBy</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:identifiedBy</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+            </children>
+          </element>
+          <element name="dwc_fields_occurrence">
+            <properties>
+              <type>fieldset</type>
+              <access>TRUE</access>
+              <required>FALSE</required>
+              <title>Occurrence terms</title>
+              <tree>TRUE</tree>
+            </properties>
+            <children>
+              <element name="occurrenceRemarks">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <required>FALSE</required>
+                  <title>Occurrence Remarks</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:occurrenceRemarks</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:occurrenceRemarks</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+            </children>
+          </element>
+          <element name="dwc_fields_taxon">
+            <properties>
+              <type>fieldset</type>
+              <access>TRUE</access>
+              <required>FALSE</required>
+              <title>Taxon terms</title>
+              <tree>TRUE</tree>
+            </properties>
+            <children>
+              <element name="scientificName">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <required>FALSE</required>
+                  <title>Sceintific Name</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:scientificName</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:scientificName</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+              <element name="vernacularName">
+                <properties>
+                  <type>textfield</type>
+                  <access>TRUE</access>
+                  <description>A common or vernacular name. see also http://rs.tdwg.org/dwc/terms/index.htm#vernacularName
+Examples: "Andean Condor", "Condor Andino", "American Eagle", "G&#xE4;nsegeier"</description>
+                  <required>TRUE</required>
+                  <title>Common Name</title>
+                  <tree>TRUE</tree>
+                  <actions>
+                    <create>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord</path>
+                      <context>document</context>
+                      <schema/>
+                      <type>element</type>
+                      <prefix>dwc</prefix>
+                      <value>dwc:vernacularName</value>
+                    </create>
+                    <read>
+                      <path>/dwr:SimpleDarwinRecordSet/dwr:SimpleDarwinRecord/dwc:vernacularName</path>
+                      <context>document</context>
+                    </read>
+                    <update>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </update>
+                    <delete>
+                      <path>self::node()</path>
+                      <context>self</context>
+                    </delete>
+                  </actions>
+                </properties>
+                <children/>
+              </element>
+            </children>
+          </element>
+        </children>
+      </element>
+      <element name="submit">
+        <properties>
+          <type>submit</type>
+          <access>TRUE</access>
+          <required>FALSE</required>
+          <tree>TRUE</tree>
+          <value>Submit</value>
+        </properties>
+        <children/>
+      </element>
+    </children>
+  </form>
+</definition>

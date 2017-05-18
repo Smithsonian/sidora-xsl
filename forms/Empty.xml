@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3">
+  <properties>
+    <root_name>ChangeMe</root_name>
+    <schema_uri/>
+    <namespaces/>
+  </properties>
+  <form>
+    <properties>
+      <type>form</type>
+      <access>TRUE</access>
+      <tree>TRUE</tree>
+    </properties>
+    <children/>
+  </form>
+</definition>
