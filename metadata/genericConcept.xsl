@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" 
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    >
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 
     <xsl:template match="/">
         <xsl:apply-templates/>
@@ -10,11 +8,11 @@
     <xsl:template match="SIdoraConcept">
         <html>
             <body>                
-                <dl class="metadata-table"></dl>
+                <dl class="metadata-table"/>
             </body>
         </html>
         <xsl:for-each select="conceptType">
-            <dt>Concept Type: <xsl:value-of select="current()"/></dt>
+            <dt>Folder Type: <xsl:value-of select="current()"/></dt>
             
         </xsl:for-each>
         
@@ -163,10 +161,10 @@
                     </xsl:if>
                 <xsl:call-template name="formatActor"/>
                 <xsl:for-each select="persname/contactInfo"> 
-                    <xsl:call-template name="formatContactInfo"></xsl:call-template>
+                    <xsl:call-template name="formatContactInfo"/>
                 </xsl:for-each>
                 <xsl:for-each select="contactInfo">
-                    <xsl:call-template name="formatContactInfo"></xsl:call-template>
+                    <xsl:call-template name="formatContactInfo"/>
                 </xsl:for-each>
             </xsl:if>               
         </xsl:for-each>  
@@ -374,7 +372,7 @@
             <dd><xsl:call-template name="formatHumanName"/></dd>
             </xsl:if>
             <xsl:for-each select="contactInfo"> 
-                <xsl:call-template name="formatContactInfo"></xsl:call-template>
+                <xsl:call-template name="formatContactInfo"/>
             </xsl:for-each>
         </xsl:for-each>
         <xsl:for-each select="taxonName">
@@ -550,7 +548,7 @@
             <dd>
                 <xsl:text>Place Time Period: </xsl:text>
             </dd>
-            <xsl:call-template name="formatTime"></xsl:call-template>
+            <xsl:call-template name="formatTime"/>
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
